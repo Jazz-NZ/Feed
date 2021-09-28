@@ -1,9 +1,7 @@
 package com.studentnetwork.feed.Feed;
 
 
-import com.studentnetwork.feed.Feed.database.GroupMembership;
-import com.studentnetwork.feed.Feed.database.GroupMembershipRepository;
-import com.studentnetwork.feed.Feed.database.PostDB;
+import com.studentnetwork.feed.Feed.database.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -25,11 +23,14 @@ public class Resursi {
     @Autowired
     private GroupMembershipRepository groupMembershipRepository;
 
+    @Autowired
+    private GroupRepository groupRepository;
+
 
     //treba da dobije userId i na osnovu toga da salje zahteve odredjenim grupama
     //{userId}
-    @RequestMapping("/{userId}")
-    public List<PostDB> getItem(@PathVariable("userId") String userid){
+    @RequestMapping("/users/{userId}")
+    public List<PostDB> getItem(@PathVariable("userId") String userid) {
 /*
         return Collections.singletonList( new ResItem("Nikola","Zivanovic",
                 Arrays.asList(new Group(1,"Matematika 1", "FON","Beogradski"),
@@ -37,8 +38,7 @@ public class Resursi {
                         new Group(3,"Statistika", "FON","Beogradski"))));*/
 
 
-
-       // ResItem[] items = restService.getJsonAsObject();
+        // ResItem[] items = restService.getJsonAsObject();
         LinkedList<PostDB> listToReturn = new LinkedList<>();
 /*
         GroupMembership membership = new GroupMembership();
@@ -62,7 +62,13 @@ public class Resursi {
     }
 
 
+    @RequestMapping("/search/{groupName}")
+    public List<GroupDB> getGroups(@PathVariable("groupName") String groupName) {
 
+        Optional<GroupDB> groupDBOptional = groupRepository.findAllByGroupDbName(groupName);
+        List<GroupDB> groups = groupDBOptional.map(Collections::singletonList).orElseGet(Collections::emptyList);
 
+        return groups;
 
+    }
 }
