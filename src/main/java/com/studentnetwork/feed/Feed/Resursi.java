@@ -71,4 +71,18 @@ public class Resursi {
         return groups;
 
     }
+
+    @RequestMapping("/join/{userID}/{groupID}")
+    public String getMembership(@PathVariable("userID") String userID, @PathVariable("groupID") String groupID ){
+
+        GroupMembership membership = new GroupMembership();
+        membership.setMemberAccount(Integer.parseInt(userID));
+        membership.setGroupDbId(Integer.parseInt(groupID));
+
+        groupMembershipRepository.save(membership);
+
+        System.out.println("membership saved");
+
+        return "joined";
+    }
 }
