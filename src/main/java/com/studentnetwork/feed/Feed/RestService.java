@@ -17,7 +17,6 @@ public class RestService {
 
     public PostDB[] getJsonAsObject(int groupId) {
         String url = "http://localhost:8085/"+groupId;
-        System.out.println();
         return this.restTemplate.getForObject(url, PostDB[].class);
     }
 

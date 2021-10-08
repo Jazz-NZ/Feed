@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface GroupMembershipRepository extends JpaRepository<GroupMembership, Integer> {
 
-    List<GroupMembership> findByMemberAccount(int memberAccount);
+    List<GroupMembership> findAllByMemberAccount(int memberAccount);
 }

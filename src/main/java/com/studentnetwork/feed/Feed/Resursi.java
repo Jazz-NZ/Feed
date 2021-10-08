@@ -50,7 +50,7 @@ public class Resursi {
         int uid = Integer.parseInt(userid);
        // groupMembershipRepository.findByMemberAccount(uid);
 
-        List<GroupMembership> groupMembership = groupMembershipRepository.findByMemberAccount(uid);
+        List<GroupMembership> groupMembership = groupMembershipRepository.findAllByMemberAccount(uid);
        // List<GroupMembership> groups = groupMembership.map(Collections::singletonList).orElseGet(Collections::emptyList);
 
         for (GroupMembership group : groupMembership) {
@@ -75,9 +75,23 @@ public class Resursi {
     @RequestMapping("/join/{userID}/{groupID}")
     public String getMembership(@PathVariable("userID") String userID, @PathVariable("groupID") String groupID ){
 
+
+        int uid = Integer.parseInt(userID);
+        List<GroupMembership> memberships = groupMembershipRepository.findAllByMemberAccount(uid);
+
+        for (GroupMembership m: memberships) {
+
+            if(m.getGroupDbId()==Integer.parseInt(groupID)){
+                System.out.println("Already member");
+                return "Already member";
+            }
+        }
+
         GroupMembership membership = new GroupMembership();
         membership.setMemberAccount(Integer.parseInt(userID));
         membership.setGroupDbId(Integer.parseInt(groupID));
+
+
 
         groupMembershipRepository.save(membership);
 
