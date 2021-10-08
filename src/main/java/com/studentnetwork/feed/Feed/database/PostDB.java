@@ -5,12 +5,10 @@ import javax.persistence.*;
 
 //treba obrisati antonacije sve koje su visak
 
-@Entity
-@Table(name = "Post")
+
 public class PostDB {
 
-    @Id
-    @GeneratedValue(strategy =  GenerationType.AUTO)
+
     private int idPost;
     private int userId;
     private String text;
