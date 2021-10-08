@@ -48,12 +48,12 @@ public class Resursi {
         groupMembershipRepository.save(membership);*/
 
         int uid = Integer.parseInt(userid);
-        groupMembershipRepository.findByMemberAccount(uid);
+       // groupMembershipRepository.findByMemberAccount(uid);
 
-        Optional<GroupMembership> groupMembership = groupMembershipRepository.findByMemberAccount(uid);
-        List<GroupMembership> groups = groupMembership.map(Collections::singletonList).orElseGet(Collections::emptyList);
+        List<GroupMembership> groupMembership = groupMembershipRepository.findByMemberAccount(uid);
+       // List<GroupMembership> groups = groupMembership.map(Collections::singletonList).orElseGet(Collections::emptyList);
 
-        for (GroupMembership group : groups) {
+        for (GroupMembership group : groupMembership) {
             PostDB[] items = restService.getJsonAsObject(group.getGroupDbId());
             listToReturn.addAll(Arrays.asList(items));
         }
